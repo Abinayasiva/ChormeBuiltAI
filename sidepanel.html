@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="origin-trial" content="ApEKlvW1qVpHDvVqhWfB7l4UbfTlTZFCbQnShMfD94791kybzVS+kpGtLqrJCYFGLiMtJUzvZpaDyF4Ue/zK1ggAAAB7eyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vcGlkZWplZGFtZWhibGpvbmFsZWZpaG9tbmJlYmJtbm0iLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElNdWx0aW1vZGFsSW5wdXQiLCJleHBpcnkiOjE3NzQzMTA0MDB9">
+    <title>ContextFlow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 18px;
+        }
+        
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .section {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .summary-text {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .connections {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .connection-item {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+        
+        .connection-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .question-box {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .question-input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .question-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .ask-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: transform 0.2s;
+        }
+        
+        .ask-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .ask-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.25);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .pulse {
+            width: 6px;
+            height: 6px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .citation-item {
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+        
+        .button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: transform 0.2s;
+            margin-bottom: 8px;
+        }
+        
+        .button:hover {
+            transform: scale(1.02);
+        }
+        
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+        
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        
+        .tab-count {
+            background: rgba(255,255,255,0.3);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">CF</div>
+            <div class="title">ContextFlow</div>
+        </div>
+        
+        <div class="section">
+            <button id="analyzeButton" class="button">🔍 Analyze All Tabs</button>
+            <div id="tabCount" class="summary-text" style="text-align: center; margin-top: 8px;">
+                Click to analyze your open tabs
+            </div>
+        </div>
+        
+        <div id="summarySection" class="section" style="display: none;">
+            <div class="section-label">📊 Cross-Tab Summary</div>
+            <div id="summaryContent" class="summary-text"></div>
+            <div class="ai-badge">
+                <div class="pulse"></div>
+                Powered by Chrome Built-in AI
+            </div>
+        </div>
+        
+        <div id="connectionsSection" class="section" style="display: none;">
+            <div class="section-label">🔗 Connected Insights</div>
+            <div id="connectionsContent" class="connections"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-label">💬 Ask Across All Tabs</div>
+            <div class="question-box">
+                <input type="text" id="questionInput" class="question-input" placeholder="e.g., What are the main themes?" />
+                <button id="askButton" class="ask-button">Ask</button>
+            </div>
+            <div id="answerContent" class="summary-text" style="font-size: 13px;">
+                Get answers synthesized from all your research tabs instantly.
+            </div>
+        </div>
+        
+        <div id="citationsSection" class="section" style="display: none;">
+            <div class="section-label">📚 Sources</div>
+            <div id="citationsContent"></div>
+        </div>
+        
+        <div id="errorSection" style="display: none;">
+            <div class="error" id="errorContent"></div>
+        </div>
+    </div>
+    
+    <script src="sidepanel.js"></script>
+</body>
+</html>
