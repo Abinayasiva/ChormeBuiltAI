@@ -1,6 +1,5 @@
  ContextFlow - AI-Powered Research Assistant
 
-![ContextFlow Banner](https://via.placeholder.com/1200x300/667eea/ffffff?text=ContextFlow)
 
  🚀 Submission for Google Chrome Built-in AI Challenge 2025
 
